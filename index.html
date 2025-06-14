@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grand MAMA's Cookbook</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    details summary {
+      cursor: pointer;
+      list-style: none;
+    }
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+    input#dark-toggle:checked ~ .dark-wrapper {
+      filter: invert(1);
+    }
+    input#dark-toggle:checked ~ .dark-wrapper img, 
+    input#dark-toggle:checked ~ .dark-wrapper video {
+      filter: invert(1);
+    }
+    input#sidebar-toggle:checked ~ .mobile-sidebar {
+      display: block;
+    }
+    .recipe-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .recipe-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(6, 182, 212, 0.2);
+    }
+    .recipe-content {
+      display: none;
+      margin-top: 1rem;
+      text-align: left;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
+    details[open] .recipe-content {
+      display: block;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+    }
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      width: 20px;
+      height: 2px;
+      background: #0891b2;
+      margin: 2px 0;
+      transition: 0.3s;
+    }
+  </style>
+</head>
+<body class="font-sans bg-cyan-50">
+  <input type="checkbox" id="dark-toggle" class="hidden">
+  <label for="dark-toggle" class="fixed bottom-4 right-4 z-50 bg-cyan-800 text-white px-4 py-2 rounded-full shadow-lg cursor-pointer hover:bg-cyan-900 transition-colors">
+    🌙 Dark
+  </label>
+
+  <div class="dark-wrapper min-h-screen transition-colors duration-300">
+
+    <!-- Navbar -->
+    <header class="gradient-bg border-b border-cyan-200 sticky top-0 z-40 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+        <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-cyan-800">Grand MAMA's Cookbook 🍲</h1>
+        <nav class="space-x-6 hidden lg:block">
+          <a href="#starters" class="text-cyan-700 hover:text-cyan-900 hover:underline transition-colors">Starters</a>
+          <a href="#main" class="text-cyan-700 hover:text-cyan-900 hover:underline transition-colors">Main</a>
+          <a href="#desserts" class="text-cyan-700 hover:text-cyan-900 hover:underline transition-colors">Desserts</a>
+          <a href="#faq" class="text-cyan-700 hover:text-cyan-900 hover:underline transition-colors">FAQ</a>
+        </nav>
+        <label for="sidebar-toggle" class="lg:hidden bg-cyan-200 px-3 py-2 rounded-lg cursor-pointer hover:bg-cyan-300 transition-colors">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </label>
+      </div>
+    </header>
+
+    <input type="checkbox" id="sidebar-toggle" class="hidden">
+    
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar lg:hidden hidden fixed inset-0 z-30 bg-black bg-opacity-50">
+      <aside class="bg-white w-64 h-full p-6 shadow-xl">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-semibold text-cyan-800">📌 Menu</h2>
+          <label for="sidebar-toggle" class="text-cyan-600 text-2xl cursor-pointer">×</label>
+        </div>
+        <ul class="space-y-4 text-cyan-700">
+          <li><a href="#starters" class="flex items-center space-x-3 hover:text-cyan-900 transition-colors py-2">
+            <span>✨</span><span>Starters</span>
+          </a></li>
+          <li><a href="#main" class="flex items-center space-x-3 hover:text-cyan-900 transition-colors py-2">
+            <span>🍛</span><span>Main Course</span>
+          </a></li>
+          <li><a href="#desserts" class="flex items-center space-x-3 hover:text-cyan-900 transition-colors py-2">
+            <span>🍬</span><span>Desserts</span>
+          </a></li>
+          <li><a href="#faq" class="flex items-center space-x-3 hover:text-cyan-900 transition-colors py-2">
+            <span>❓</span><span>FAQs</span>
+          </a></li>
+          <li><a href="#form" class="flex items-center space-x-3 hover:text-cyan-900 transition-colors py-2">
+            <span>✉️</span><span>Contact</span>
+          </a></li>
+        </ul>
+      </aside>
+    </div>
+
+    <div class="flex">
+      <!-- Desktop Sidebar -->
+      <aside class="w-64 gradient-bg p-6 hidden lg:block sticky top-20 h-screen shadow-inner">
+        <h2 class="text-xl font-semibold mb-6 text-cyan-800">📌 Categories</h2>
+        <ul class="space-y-4 text-cyan-700">
+          <li><a href="#starters" class="flex items-center space-x-3 hover:text-cyan-900 transition-colors py-2 rounded-lg hover:bg-cyan-100 px-3">
+            <span>✨</span><span>Starters</span>
+          </a></li>
+          <li><a href="#main" class="flex items-center space-x-3 hover:text-cyan-900 transition-colors py-2 rounded-lg hover:bg-cyan-100 px-3">
+            <span>🍛</span><span>Main Course</span>
+          </a></li>
+          <li><a href="#desserts" class="flex items-center space-x-3 hover:text-cyan-900 transition-colors py-2 rounded-lg hover:bg-cyan-100 px-3">
+            <span>🍬</span><span>Desserts</span>
+          </a></li>
+          <li><a href="#faq" class="flex items-center space-x-3 hover:text-cyan-900 transition-colors py-2 rounded-lg hover:bg-cyan-100 px-3">
+            <span>❓</span><span>FAQs</span>
+          </a></li>
+          <li><a href="#form" class="flex items-center space-x-3 hover:text-cyan-900 transition-colors py-2 rounded-lg hover:bg-cyan-100 px-3">
+            <span>✉️</span><span>Contact</span>
+          </a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- Hero Section -->
+        <section class="text-center py-12 bg-gradient-to-r from-cyan-100 to-cyan-200 rounded-2xl shadow-lg mx-4 lg:mx-0">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-cyan-800 mb-4">Hey, Grandma is always here 😃️ </h2>
+          <p class="text-lg sm:text-xl text-cyan-700 max-w-2xl mx-auto px-4">If you have any doubts regarding cooking Telugu crusine I am always here</p>
+        </section>
+
+        <!-- Starters Section -->
+        <section id="starters">
+          <h2 class="text-2xl sm:text-3xl font-bold text-cyan-900 mb-6 text-center lg:text-left">✨ Starters</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+            <details class="recipe-card bg-white p-6 rounded-2xl shadow-lg border border-cyan-100 text-center" id = "1">
+              <summary class="cursor-pointer">
+                <img src="https://i.pinimg.com/736x/35/75/5d/35755d060e795d70c9735375a58f6aea.jpg" alt="Punugulu" class="w-full h-48 object-cover rounded-xl mb-4">
+                <h3 class="text-cyan-800 font-bold text-lg mb-2">Punugulu</h3>
+                <h4 class="text-cyan-800 text-lg ">Little crunchy balls made from dosa batter that are fun to bite</h4>
+                <p class="text-cyan-600 text-sm">Click to view recipe</p>
+              </summary>
+              <div class="recipe-content bg-cyan-50 p-4 rounded-lg mt-4">
+                <h4 class="font-semibold text-cyan-800 mb-2">Recipe:</h4>
+                <p class="text-cyan-700"> Ingredients:<br>1 cup dosa/idli batter, salt, cumin seeds, chopped onion/chilli (optional), oil.</p>
+                <p class="text-cyan-700">Steps:<br>1.Mix batter, salt, and cumin (add onion/chilli if you like)<br>2.Heat oil; drop small dollops of batter.<br>3.Fry until golden and crisp.<br>4.Drain and eat with chutney.</p>
+              </div>
+            </details>
+            
+            <details class="recipe-card bg-white p-6 rounded-2xl shadow-lg border border-cyan-100 text-center" >
+              <summary class="cursor-pointer">
+                <img src="https://i.pinimg.com/736x/54/4a/81/544a81b76d458dcc87b5427952ade6c6.jpg" alt="Pesarattu" class="w-full h-48 object-cover rounded-xl mb-4">
+                <h3 class="text-cyan-800 font-bold text-lg mb-2">Pesarattu</h3>
+                <h4 class="text-cyan-800 text-lg ">A green pancake made from moong beans—soft on the inside, crisp at the edges</h4>
+                <p class="text-cyan-600 text-sm">Click to view recipe</p>
+              </summary id = "2">
+              <div class="recipe-content bg-cyan-50 p-4 rounded-lg mt-4">
+                <h4 class="font-semibold text-cyan-800 mb-2">Recipe:</h4>
+                <p class="text-cyan-700"> Ingredients:<br>Soaked moong beans, salt, ginger, green chilli, oil.</p>
+                <p class="text-cyan-700">Steps:<br>1.Grind beans with ginger, chilli, salt to make batter.<br>2.Spread thin on a hot pan.<br>3. Drizzle oil; cook until you see golden spots.<br>4.Fold and eat with chutney.</p>
+              </div>
+            </details>
+
+            <details class="recipe-card bg-white p-6 rounded-2xl shadow-lg border border-cyan-100 text-center" id = "3">
+              <summary class="cursor-pointer">
+                <img src="https://i.pinimg.com/736x/4f/53/52/4f5352d8d43f48f1a9a10b7938e0a598.jpg" alt="Gobi 65" class="w-full h-48 object-cover rounded-xl mb-4">
+                <h3 class="text-cyan-800 font-bold text-lg mb-2">Gobi 65</h3>
+                <h4 class="text-cyan-800 text-lg ">Tasty fried cauliflower pieces coated in spicy crunchy goodness</h4>
+                <p class="text-cyan-600 text-sm">Click to view recipe</p>
+              </summary>
+              <div class="recipe-content bg-cyan-50 p-4 rounded-lg mt-4">
+                <h4 class="font-semibold text-cyan-800 mb-2">Recipe:</h4>
+                <p class="text-cyan-700"> Ingredients:<br>Cauliflower florets, gram flour, chilli, ginger-garlic, salt, oil.</p>
+                <p class="text-cyan-700">Steps:<br>1.Toss cauliflower in spiced batter.<br>2.Deep-fry until crispy and red.<br>3.Serve warm.</p>
+              </div>
+            </details>
+
+            <details class="recipe-card bg-white p-6 rounded-2xl shadow-lg border border-cyan-100 text-center" id = "4">
+              <summary class="cursor-pointer">
+                <img src="https://i.pinimg.com/736x/a6/cf/e4/a6cfe4c37438458644a2c0c92461b980.jpg" alt="Mirchi Bajji" class="w-full h-48 object-cover rounded-xl mb-4">
+                <h3 class="text-cyan-800 font-bold text-lg mb-2">Mirchi Bajji</h3>
+                <h4 class="text-cyan-800 text-lg ">Big green chillies dressed in golden fried batter—spicy fun!</h4>
+                <p class="text-cyan-600 text-sm">Click to view recipe</p>
+              </summary>
+              <div class="recipe-content bg-cyan-50 p-4 rounded-lg mt-4">
+                <h4 class="font-semibold text-cyan-800 mb-2">Recipe:</h4>
+                <p class="text-cyan-700"> Ingredients:<br>Green chillies, chickpea flour, salt, cumin, water, oil.</p>
+                <p class="text-cyan-700">Steps:<br>1.Make batter with flour, salt, water, cumin.<br>2. Dip chillies, fry till golden.<br>3.Eat hot with chutney.</p>
+              </div>
+            </details>
+
+
+            <details class="recipe-card bg-white p-6 rounded-2xl shadow-lg border border-cyan-100 text-center" id = "5">
+              <summary class="cursor-pointer">
+                <img src="https://i.pinimg.com/736x/3f/d0/76/3fd07637850a01e0fea47a85eaff2a6b.jpg" alt="Pesara Punukulu" class="w-full h-48 object-cover rounded-xl mb-4">
+                <h3 class="text-cyan-800 font-bold text-lg mb-2">Pesara Punukulu</h3>
+                <h4 class="text-cyan-800 text-lg ">Tiny lacy fritters made from green moong dal—light and millet.</h4>
+                <p class="text-cyan-600 text-sm">Click to view recipe</p>
+              </summary>
+              <div class="recipe-content bg-cyan-50 p-4 rounded-lg mt-4">
+                <h4 class="font-semibold text-cyan-800 mb-2">Recipe:</h4>
+                <p class="text-cyan-700"> Ingredients:<br>Whole moong dal (soaked), salt, oil.</p>
+                <p class="text-cyan-700">Steps:<br>1.Drain soaked dal; mix with salt.<br>2.Fry spoonfuls until puffed.<br>3.Eat when warm.</p>
+              </div>
+            </details>            
+                        
+          </div>
+        </section>
+
+        <!-- Main Course Section -->
+        <section id="main">
+          <h2 class="text-2xl sm:text-3xl font-bold text-cyan-900 mb-6 text-center lg:text-left">🍛 Main Course</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <details class="recipe-card bg-white p-6 rounded-2xl shadow-lg border border-cyan-100 text-center">
+              <summary class="cursor-pointer">
+                <img src="https://i.pinimg.com/736x/8d/2f/1d/8d2f1d9be99c37f03bc091be0de70789.jpg" alt="Gongura Mutton" class="w-full h-48 object-cover rounded-xl mb-4">
+                <h3 class="text-cyan-800 font-bold text-lg mb-2">Gongura Mutton</h3>
+                <h4 class="text-cyan-800 text-lg ">Tender meat cooked with sour sorrel leaves—tangy and yummy.</h4>
+                <p class="text-cyan-600 text-sm">Click to view recipe</p>
+              </summary>
+              <div class="recipe-content bg-cyan-50 p-4 rounded-lg mt-4">
+                <h4 class="font-semibold text-cyan-800 mb-2">Recipe:</h4>
+                <p class="text-cyan-700"> Ingredients:<br>mutton, gongura leaves, onion, ginger-garlic paste, turmeric, red chilli powder, coriander powder, cumin powder, whole spices</p>
+                <p class="text-cyan-700">Steps:<br>1.Cook mutton with ginger-garlic, onion, chilli, turmeric, and salt until soft.
+<br>2.Grind masala spices (e.g. cumin, coriander, garlic) and add.<br>3.Stir in chopped gongura leaves, cook till oil surfaces.<br>4.Simmer a few minutes and serve hot with rice.</p>
+              </div>
+            </details>
+            
+            <details class="recipe-card bg-white p-6 rounded-2xl shadow-lg border border-cyan-100 text-center">
+              <summary class="cursor-pointer">
+                <img src="https://i.pinimg.com/736x/59/a2/b0/59a2b0b9c273d3db2a851c0a90add027.jpg" alt="Pulihora (Tamarind Rice)" class="w-full h-48 object-cover rounded-xl mb-4">
+                <h3 class="text-cyan-800 font-bold text-lg mb-2">Pulihora (Tamarind Rice)</h3>
+                <h4 class="text-cyan-800 text-lg ">Rice mixed with tamarind, spices, and peanuts—sweet and sour comfort.</h4>
+                <p class="text-cyan-600 text-sm">Click to view recipe</p>
+              </summary>
+              <div class="recipe-content bg-cyan-50 p-4 rounded-lg mt-4">
+                <h4 class="font-semibold text-cyan-800 mb-2">Recipe:</h4>
+                <p class="text-cyan-700"> Ingredients:<br>cooked rice, tamarind extract, peanuts, mustard seeds, chana dal, urad dal, dried chillies, curry leaves, turmeric, chilli powder, salt, oil.</p>
+                <p class="text-cyan-700">Steps:<br>1.Fry mustard, chana/urad dal, chillies, curry leaves in oil.<br>2.Add tamarind extract, turmeric, chilli powder, salt.<br>3.Mix this into cooked rice well.<br>4.Serve warm or pack for lunch.</p>
+              </div>
+            </details>
+
+            <details class="recipe-card bg-white p-6 rounded-2xl shadow-lg border border-cyan-100 text-center">
+              <summary class="cursor-pointer">
+                <img src="https://i.pinimg.com/736x/07/7f/07/077f078a54729260bbd8b97a1567e725.jpg" alt="Gutthi Vankaya Kura" class="w-full h-48 object-cover rounded-xl mb-4">
+                <h3 class="text-cyan-800 font-bold text-lg mb-2">Gutthi Vankaya Kura</h3>
+                <h4 class="text-cyan-800 text-lg ">Little eggplants stuffed with spicy peanut paste—melt-in-your-mouth.</h4>
+                <p class="text-cyan-600 text-sm">Click to view recipe</p>
+              </summary>
+              <div class="recipe-content bg-cyan-50 p-4 rounded-lg mt-4">
+                <h4 class="font-semibold text-cyan-800 mb-2">Recipe:</h4>
+                <p class="text-cyan-700"> Ingredients:<br>small brinjals, peanuts, sesame seeds (and optional coconut), chilli powder, coriander powder, tamarind, salt, oil, mustard seeds, curry leaves</p>
+                <p class="text-cyan-700">Steps:<br>1.Grind peanuts, sesame (and coconut) with spices into paste.<br>2.Slit brinjals, stuff with paste.<br>3.Sauté mustard seeds, curry leaves, then cook stuffed eggplants.<br>4.Add tamarind water, simmer until soft.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- Desserts Section -->
+        <section id="desserts">
+          <h2 class="text-2xl sm:text-3xl font-bold text-cyan-900 mb-6 text-center lg:text-left">🍬 Desserts</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <details class="recipe-card bg-white p-6 rounded-2xl shadow-lg border border-cyan-100 text-center">
+              <summary class="cursor-pointer">
+                <img src="https://i.pinimg.com/736x/29/e6/7b/29e67ba5b2d0f90bc7b4cf43ecee5174.jpg" alt="Pootharekulu" class="w-full h-48 object-cover rounded-xl mb-4">
+                <h3 class="text-cyan-800 font-bold text-lg mb-2">Pootharekulu</h3>
+                <h4 class="text-cyan-800 text-lg ">Paper-thin rice rolls with sweet jaggery—like candy clouds.</h4>
+                <p class="text-cyan-600 text-sm">Click to view recipe</p>
+              </summary>
+              <div class="recipe-content bg-cyan-50 p-4 rounded-lg mt-4">
+                <h4 class="font-semibold text-cyan-800 mb-2">Recipe:</h4>
+                <p class="text-cyan-700"> Ingredients:<br>rice paper sheets, ghee, powdered jaggery or sugar</p>
+                <p class="text-cyan-700">Steps:<br>1.Lay a paper-thin rice sheet on a plate.<br>2.Brush ghee, sprinkle sugar or jaggery.<br>3.Roll it up gently.<br>4.Serve immediately.</p>
+              </div>
+            </details>
+            
+            <details class="recipe-card bg-white p-6 rounded-2xl shadow-lg border border-cyan-100 text-center">
+              <summary class="cursor-pointer">
+                <img src="https://i.pinimg.com/736x/2a/23/a4/2a23a4cf58e86764c9b83fdca5963787.jpg" alt="Ariselu" class="w-full h-48 object-cover rounded-xl mb-4">
+                <h3 class="text-cyan-800 font-bold text-lg mb-2">Ariselu</h3>
+                <h4 class="text-cyan-800 text-lg ">Sweet, flat rice-jaggery discs—soft and chewy</h4>
+                <p class="text-cyan-600 text-sm">Click to view recipe</p>
+              </summary>
+              <div class="recipe-content bg-cyan-50 p-4 rounded-lg mt-4">
+                <h4 class="font-semibold text-cyan-800 mb-2">Recipe:</h4>
+                <p class="text-cyan-700"> Ingredients:<br>rice flour, jaggery, ghee/oil</p>
+                <p class="text-cyan-700">Steps:<br>1.Mix rice flour and jaggery into soft dough.<br>2.Flatten small discs.<br>3.Fry discs in hot oil until golden.<br>4.Drain and cool before eating.</p>
+              </div>
+            </details>
+
+            <details class="recipe-card bg-white p-6 rounded-2xl shadow-lg border border-cyan-100 text-center">
+              <summary class="cursor-pointer">
+                <img src="https://i.pinimg.com/736x/79/06/fc/7906fcb3cda0f064c089ffa840b9f044.jpg" alt="Kakinada Khaja" class="w-full h-48 object-cover rounded-xl mb-4">
+                <h3 class="text-cyan-800 font-bold text-lg mb-2">Kakinada Khaja</h3>
+                <h4 class="text-cyan-800 text-lg ">Flaky deep-fried pastry soaked in sweet syrup—crunchy and juicy</h4>
+                <p class="text-cyan-600 text-sm">Click to view recipe</p>
+              </summary>
+              <div class="recipe-content bg-cyan-50 p-4 rounded-lg mt-4">
+                <h4 class="font-semibold text-cyan-800 mb-2">Recipe:</h4>
+                <p class="text-cyan-700"> Ingredients:<br>all-purpose flour-based layered dough, ghee (in layers), sugar syrup</p>
+                <p class="text-cyan-700">Steps:<br>1.Make layered dough with ghee between.<br>2.Cut into shapes.<br>3.Fry until crisp and brown.<br>4. Dip in sugar syrup and drain.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq">
+          <h2 class="text-2xl sm:text-3xl font-bold text-cyan-900 mb-6 text-center lg:text-left">❓ Frequently Asked Questions</h2>
+          <div class="space-y-4">
+            <details class="bg-white p-6 rounded-2xl shadow-lg border border-cyan-100">
+              <summary class="font-bold text-cyan-800 cursor-pointer text-lg">Are these traditional recipes?</summary>
+              <p class="mt-4 text-cyan-700 leading-relaxed">Yes, all recipes are rooted in authentic Andhra cuisine with some modern tweaks for ease of preparation in today's kitchens.</p>
+            </details>
+            <details class="bg-white p-6 rounded-2xl shadow-lg border border-cyan-100">
+              <summary class="font-bold text-cyan-800 cursor-pointer text-lg">Are measurements provided?</summary>
+              <p class="mt-4 text-cyan-700 leading-relaxed">This version showcases dishes visually. For detailed measurements and step-by-step instructions, future updates will include printable recipe cards.</p>
+            </details>
+            <details class="bg-white p-6 rounded-2xl shadow-lg border border-cyan-100">
+              <summary class="font-bold text-cyan-800 cursor-pointer text-lg">Can I substitute ingredients?</summary>
+              <p class="mt-4 text-cyan-700 leading-relaxed">Many ingredients can be substituted based on availability and dietary preferences. We'll provide alternative options in detailed recipe cards.</p>
+            </details>
+            <details class="bg-white p-6 rounded-2xl shadow-lg border border-cyan-100">
+              <summary class="font-bold text-cyan-800 cursor-pointer text-lg">How spicy are these dishes?</summary>
+              <p class="mt-4 text-cyan-700 leading-relaxed">Andhra cuisine is known for its bold flavors and spice levels. All recipes can be adjusted to your preferred spice level.</p>
+            </details>
+          </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section id="form">
+          <h2 class="text-2xl sm:text-3xl font-bold text-cyan-900 mb-6 text-center lg:text-left">✉️ Submit Your Favorite Recipe</h2>
+          <div class="bg-white p-8 rounded-2xl shadow-lg border border-cyan-100 max-w-2xl mx-auto">
+            <form class="space-y-6">
+              <div>
+                <label for="name" class="block text-cyan-800 font-semibold mb-2 text-lg">Your Name</label>
+                <input type="text" id="name" name="name" class="w-full border-2 border-cyan-200 p-4 rounded-xl focus:border-cyan-500 focus:outline-none transition-colors" placeholder="e.g. Lakshmi" required />
+              </div>
+              <div>
+                <label for="email" class="block text-cyan-800 font-semibold mb-2 text-lg">Email</label>
+                <input type="email" id="email" name="email" class="w-full border-2 border-cyan-200 p-4 rounded-xl focus:border-cyan-500 focus:outline-none transition-colors" placeholder="you@example.com" required />
+              </div>
+              <div>
+                <label for="recipe" class="block text-cyan-800 font-semibold mb-2 text-lg">Recipe Description</label>
+                <textarea id="recipe" name="recipe" rows="6" class="w-full border-2 border-cyan-200 p-4 rounded-xl focus:border-cyan-500 focus:outline-none transition-colors resize-none" placeholder="Tell us about your special dish, ingredients, and cooking method..." required></textarea>
+              </div>
+              <button type="submit" class="w-full bg-cyan-600 text-white px-6 py-4 rounded-xl hover:bg-cyan-700 transition-colors font-semibold text-lg shadow-lg">
+                Send Recipe 📤
+              </button>
+            </form>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-cyan-800 to-cyan-900 text-white mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h4 class="font-bold mb-4 text-xl">About Grand MAMA's Cookbook</h4>
+            <p class="text-cyan-100 leading-relaxed">A passionate tribute to Andhra's rich food heritage. Every recipe is curated with love and represents the authentic flavors passed down through generations.</p>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4 text-xl">Quick Links</h4>
+            <ul class="space-y-2 text-cyan-100">
+              <li><a href="#starters" class="hover:text-white transition-colors">✨ Starters</a></li>
+              <li><a href="#main" class="hover:text-white transition-colors">🍛 Main Course</a></li>
+              <li><a href="#desserts" class="hover:text-white transition-colors">🍬 Desserts</a></li>
+              <li><a href="#faq" class="hover:text-white transition-colors">❓ FAQ</a></li>
+              <li><a href="#form" class="hover:text-white transition-colors">✉️ Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4 text-xl">Get in Touch(ITS DUMMY)</h4>
+            <div class="space-y-2 text-cyan-100">
+              <p>📧 Email: <a href="mailto:info@andhracookbook.com" class="hover:text-white transition-colors">info@Grand Mama.com</a></p>
+              <p>📱 Instagram: <a href="#" class="hover:text-white transition-colors">@Grand Mama</a></p>
+              <p>🌐 Location: Corner of the Internet</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center text-sm py-6 bg-cyan-900 border-t border-cyan-700">
+        <p class="text-cyan-200">© 2025 Grand MAMA's Cookbook.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
